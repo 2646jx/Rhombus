@@ -1,4 +1,4 @@
-# Rhombus; Fast Homomorphic Matrix-Vector Multiplication for Secure Two-Party Inference
+# Rhombus: Fast Homomorphic Matrix-Vector Multiplication for Secure Two-Party Inference
 
 ## Introduction
 
@@ -25,6 +25,18 @@ bash scripts/build.sh
 ```
 
 then the library and tests will be built.
+
+## Test
+
+Once built successfully, run the following two commands to test the matrix-vector multiplication and matrix-matrix multiplication, respectively:
+
+```PowerShell
+./build/bin/matvec
+```
+
+```PowerShell
+./build/bin/matmul
+```
 
 ## Options
 
