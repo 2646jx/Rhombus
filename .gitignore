@@ -1,0 +1,16 @@
+### C++ 
+*.d
+
+# dependencies
+deps/*
+
+# vscode
+*.vscode
+
+# mac cache
+*.DS_Store
+
+# binary file
+build/
+cmake-build-*/
+
