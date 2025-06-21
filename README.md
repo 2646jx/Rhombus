@@ -52,3 +52,7 @@ After resetting the options, execute the commands again:
 bash scripts/build-deps.sh
 bash scripts/build.sh
 ```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
