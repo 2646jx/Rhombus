@@ -5,7 +5,8 @@ using namespace std;
 using namespace rhombus;
 
 
-// PackRLWEs based MatMul
+// Simulate a scenario where Alice (resp., Bob) holds a matrix X (resp., Y), and they want to compute X * Y,
+// while the results are in the form of secret sharing.
 void matmul_2pc_simulate(uint32_t n, uint32_t m, uint32_t k, uint32_t matX_bits, uint32_t matY_bits,
                         uint32_t mod_bits, uint32_t threads, bool use_PackRLWEs, bool use_V1)
 {
@@ -13,7 +14,6 @@ void matmul_2pc_simulate(uint32_t n, uint32_t m, uint32_t k, uint32_t matX_bits,
     chrono::microseconds time_diff;
 
     // Set HE parameters.
-    // Note: if the bit size of the matrix is too large, we should use a larger parameters
     uint32_t N = 8192;
     vector<int> coeff_mod_bits{50, 50, 60};
 
@@ -49,9 +49,6 @@ void matmul_2pc_simulate(uint32_t n, uint32_t m, uint32_t k, uint32_t matX_bits,
     cout << "-> matrix Y bit count: " << matY_bits << endl;
     cout << "+****************************************************+" << endl;
 
-    // Assume Alice and Bob hold matrices X and Y, respectively, they want to compute X*Y (in secret
-    // sharing form). We simulate this process as follows.
-
     // Initialize two objects for matrix multiplication, one is for Alice, and the other is for Bob.
     // The parameter 'mod_bits' indicates the plaintext space/modulus is 2^mod_bits
     auto AliceMatMul = RhombusMatMul(N, mod_bits, coeff_mod_bits);
@@ -61,11 +58,11 @@ void matmul_2pc_simulate(uint32_t n, uint32_t m, uint32_t k, uint32_t matX_bits,
     AliceMatMul.configure(n, m, k, matX_bits, matY_bits);
     BobMatMul.configure(n, m, k, matX_bits, matY_bits);
 
-    // PackRLWEs + V1
+    // Set method
     AliceMatMul.set_method(use_PackRLWEs, use_V1);
     BobMatMul.set_method(use_PackRLWEs, use_V1);
 
-    // It depends on the desired accurary of output and HE parameters
+    // Set the number of modulus of the output HE ciphertext. This depends on the desired accurary of output and HE parameters
     AliceMatMul.set_remain_n_mod((mod_bits > 40) ? 2 : 1);
     BobMatMul.set_remain_n_mod((mod_bits > 40) ? 2 : 1);
 
@@ -81,7 +78,7 @@ void matmul_2pc_simulate(uint32_t n, uint32_t m, uint32_t k, uint32_t matX_bits,
     // Init matrices
     vector<int64_t> matX(n * m);
     vector<int64_t> matY(m * k);
-    vector<int64_t> matXY(n * k); // used to save the cleartext result
+    vector<int64_t> matXY(n * k);  // used to save the cleartext result
     vector<int64_t> matXY_dec(n * k);
     vector<int64_t> matXY_share0(n * k);
     vector<int64_t> matXY_share1(n * k);
@@ -137,7 +134,6 @@ void matmul_2pc_simulate(uint32_t n, uint32_t m, uint32_t k, uint32_t matX_bits,
 
     uint64_t max_diff;
     CompVector(matXY.data(), matXY_dec.data(), n * k, max_diff, mod_bits);
-    cout << "max_diff: " << max_diff << endl;
 
     // Set the acceptable error
     if (max_diff < 100)
@@ -165,12 +161,12 @@ int main(){
     matmul_2pc_simulate(n, m, k, matX_bits, matY_bits, mod_bits, nthread, use_PackRLWEs, use_V1);
 
     // PackRLWEs + V2
-    use_PackRLWEs = true;
-    use_V1 = false;
-    matmul_2pc_simulate(n, m, k, matX_bits, matY_bits, mod_bits, nthread, use_PackRLWEs, use_V1);
+    // use_PackRLWEs = true;
+    // use_V1 = false;
+    // matmul_2pc_simulate(n, m, k, matX_bits, matY_bits, mod_bits, nthread, use_PackRLWEs, use_V1);
 
     // PackRLWEs + V1
-    use_PackRLWEs = true;
-    use_V1 = true;
-    matmul_2pc_simulate(n, m, k, matX_bits, matY_bits, mod_bits, nthread, use_PackRLWEs, use_V1);
+    // use_PackRLWEs = true;
+    // use_V1 = true;
+    // matmul_2pc_simulate(n, m, k, matX_bits, matY_bits, mod_bits, nthread, use_PackRLWEs, use_V1);
 }
