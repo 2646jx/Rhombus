@@ -13,7 +13,7 @@ This project implements three algorithms: PackRLWEs+V1, PackRLWEs+V2, and Expand
 
 `scripts/`, `src/`, `test/` are the main directories of this project.
 
-- `scripts/`: there are two scripts `build-deps.sh` and `build.sh`, which are used to build the dependencies [SEAL](https://github.com/microsoft/SEAL) and to build this project.
+- `scripts/`: there are two scripts `build-deps.sh` and `build.sh`, which are used to build the dependency [SEAL](https://github.com/microsoft/SEAL) and to build this project.
 - `src/`: the implementation of [Rhombus](https://eprint.iacr.org/2024/1611.pdf)
 - `test/`: the module tests
 
