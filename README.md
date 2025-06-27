@@ -6,8 +6,8 @@ This repository provides the implementation of the paper [Rhombus](https://eprin
 In [Rhombus](https://eprint.iacr.org/2024/1611.pdf), the authors propose the matrix-vector multiplication (MVM) and matrix-matrix multiplication (MatMul).
 For MVM, there are row-major (based on PackRLWEs) and column-major (based on Expand) approaches, we now only implement the row-major approach, the column-major
 approach might be updated later. For the MatMul algorithm, [Rhombus](https://eprint.iacr.org/2024/1611.pdf) proposed the PackRLWEs, Expand based approaches,
-and the V1, V2 splitting method for matrix partitioning. In summary, there are 4 algorithms: PackRLWEs+V1, PackRLWEs+V2, Expand+V1, Expand+V2.
-This project implements three algorithms: PackRLWEs+V1, PackRLWEs+V2, and Expand+V2.
+and the V1, V2 splitting method for matrix partitioning. In summary, there are 4 algorithms for MatMul: PackRLWEs+V1, PackRLWEs+V2, Expand+V1, Expand+V2.
+This project implements three of them: PackRLWEs+V1, PackRLWEs+V2, and Expand+V2.
 
 ## Building
 
