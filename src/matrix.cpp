@@ -8,7 +8,7 @@ namespace rhombus{
             throw std::invalid_argument("Invalid rows or columns");
         if (nrows == 0 || ncols == 0)
             throw std::invalid_argument("Invalid rows or columns");
-        if (mat_bits >= 64)
+        if (mat_bits > 64)
             throw std::invalid_argument("Require: mat_bits <= 64");
 
         meta.nrows_ = nrows;
