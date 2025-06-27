@@ -389,7 +389,11 @@ void mvm_performance(int iter_num, uint32_t mat_bits, uint32_t vec_bits, uint64_
     cout << "Repeat " << iter_num << " times for every case" << endl;
     cout << "+****************************************************+" << endl;
 
+    // Note: Be careful when setting the HE parameters, e.g., if you want to set the mod_bits = 64, then 
+    // the coefficient moduli should be large enough to handle the noise. 
     shared_ptr<RhombusMatVec> Rmatvec = make_shared<RhombusMatVec>(N, mod_bits, vector<int>{50, 50, 60});
+    // the number of ciphertext modulus of the output ciphertext. If you want to set a large mod_bits (e.g., 64)
+    // this parameter should be set to 2.
     Rmatvec->set_remain_n_mod(1);
 
     std::string gk_str;
@@ -409,8 +413,8 @@ void mvm_performance(int iter_num, uint32_t mat_bits, uint32_t vec_bits, uint64_
             for (int it = 0; it < iter_num; ++it)
             {
                 // Choose the matrix, vector type here.
-                vector<int> mat(nrows * ncols);
-                vector<int> vec(ncols);
+                vector<int64_t> mat(nrows * ncols);
+                vector<int64_t> vec(ncols);
                 vector<int64_t> mv(nrows);
                 vector<int64_t> mv_share0(nrows);
                 vector<int64_t> mv_share1(nrows);
